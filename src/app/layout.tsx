@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <main className='p-4 max-w-7xl m-auto min-width-[300px]'>
-        {children}
+          {children}
         </main>
       </body>
     </html>
