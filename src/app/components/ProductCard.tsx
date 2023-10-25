@@ -1,20 +1,33 @@
 import { products } from "@prisma/client";
 import Link from "next/link";
+import PriceTag from "./PriceTag";
+import Image from "next/image";
 
 interface ProductCardProps {
   product: products;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const isNew = Date.now() - new Date(product.createdAt).getTime() < 1000 * 60 * 60 * 24 * 7
   return (
     <Link
       href={"/products/" + product.id}
       className="card w-full bg-base-100 hover:shadow-xl transition-shadow"
     >
+      <figure>
+        <Image
+          src={product.imageURL}
+          alt={product.name}
+          width={800}
+          height={400}
+          className="h-auto object-cover"
+        />
+      </figure>
       <div className="card-body">
-        <img src={product.imageURL}/>
         <h2 className="card-title">{product.name}</h2>
+        {isNew && <div className="badge badge-secondary">NEW</div>}
         <p>{product.description}</p>
+        <PriceTag price={product.price} />
       </div>
     </Link>
   );
